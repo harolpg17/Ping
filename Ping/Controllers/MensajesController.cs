@@ -13,7 +13,7 @@ namespace Ping.Controllers
         public string Emitir()
         {
             var emitirMensaje = new EmitirMensaje();
-            var response = emitirMensaje.Call("PIN_MESSAGE");
+            var response = emitirMensaje.Call("PING_MESSAGE");
             emitirMensaje.Close();
             return response;
         }
