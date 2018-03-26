@@ -2,11 +2,8 @@
 using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Ping.Bus
 {
@@ -46,23 +43,20 @@ namespace Ping.Bus
 
         public async Task<string> CallAsync(string message)
         {
-            //return new Task<string>(() =>
-            //{
-                var messageBytes = Encoding.UTF8.GetBytes(message);
+            var messageBytes = Encoding.UTF8.GetBytes(message);
             
-                channel.BasicPublish(
-                    exchange: "",
-                    routingKey: "PING_PONG",
-                    basicProperties: props,
-                    body: messageBytes);
+            channel.BasicPublish(
+                exchange: "",
+                routingKey: "PING_PONG",
+                basicProperties: props,
+                body: messageBytes);
 
-                channel.BasicConsume(
-                    consumer: consumer,
-                    queue: replyQueueName,
-                    autoAck: true);
+            channel.BasicConsume(
+                consumer: consumer,
+                queue: replyQueueName,
+                autoAck: true);
 
-                return respQueue.Take();
-            //});
+            return respQueue.Take();
         }
 
         public void Close()
